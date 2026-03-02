@@ -41,4 +41,5 @@ desktop.ini
 output/
 *.generated.pdf
 
-*.claude
+## Claude Code
+.claude/
