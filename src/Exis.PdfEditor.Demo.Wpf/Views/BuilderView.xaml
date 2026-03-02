@@ -1,0 +1,92 @@
+<UserControl x:Class="Exis.PdfEditor.Demo.Wpf.Views.BuilderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Exis.PdfEditor.Demo.Wpf.ViewModels"
+             Background="{StaticResource SurfaceBrush}"
+             Padding="20,16">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel MaxWidth="720">
+
+            <!-- Template Selection -->
+            <GroupBox Header="Template">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="Choose a document template" />
+                    <ComboBox ItemsSource="{Binding Templates}"
+                              SelectedItem="{Binding SelectedTemplate}"
+                              Width="240"
+                              HorizontalAlignment="Left" />
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Document Properties -->
+            <GroupBox Header="Document Properties">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Style="{StaticResource FieldLabel}" Text="Document title" />
+                    <TextBox Grid.Row="1" Style="{StaticResource StyledTextBox}"
+                             Text="{Binding DocumentTitle, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <TextBlock Grid.Row="2" Style="{StaticResource FieldLabel}" Text="Author" />
+                    <TextBox Grid.Row="3" Style="{StaticResource StyledTextBox}"
+                             Text="{Binding AuthorName, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <TextBlock Grid.Row="4" Style="{StaticResource FieldLabel}" Text="Body text" />
+                    <TextBox Grid.Row="5" Style="{StaticResource StyledTextBox}"
+                             Text="{Binding BodyText, UpdateSourceTrigger=PropertyChanged}"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             MinHeight="120"
+                             VerticalScrollBarVisibility="Auto" />
+                </Grid>
+            </GroupBox>
+
+            <!-- Output -->
+            <GroupBox Header="Output">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"
+                             Style="{StaticResource StyledTextBox}"
+                             Text="{Binding OutputPath, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="True"
+                             Margin="0,0,10,0" />
+                    <Button Grid.Column="1"
+                            Style="{StaticResource SecondaryButton}"
+                            Content="Browse..."
+                            Command="{Binding BrowseOutputCommand}" />
+                </Grid>
+            </GroupBox>
+
+            <!-- Generate -->
+            <Button Style="{StaticResource PrimaryButton}"
+                    Content="Generate PDF"
+                    Command="{Binding GenerateCommand}"
+                    HorizontalAlignment="Left"
+                    Margin="0,4,0,0" />
+
+            <!-- Processing Indicator -->
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Visibility="{Binding IsProcessing, Converter={StaticResource BoolToVisibility}}"
+                         Margin="0,12,0,0" />
+
+            <!-- Result -->
+            <TextBlock Style="{StaticResource ResultText}"
+                       Text="{Binding ResultMessage}"
+                       Margin="0,12,0,0" />
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

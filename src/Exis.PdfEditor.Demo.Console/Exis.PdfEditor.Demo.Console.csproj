@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Exis.PdfEditor.Demo.Console</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Exis.PdfEditor" Version="1.5.2" />
+  </ItemGroup>
+</Project>

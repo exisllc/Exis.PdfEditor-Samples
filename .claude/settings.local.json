@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"D:/GitHub/ExisPdfDemoApps/ExisPdfDemoApps\" && dotnet restore ExisPdfDemoApps.slnx 2>&1)",
+      "Bash(cd \"D:/GitHub/ExisPdfDemoApps/ExisPdfDemoApps\" && dotnet build ExisPdfDemoApps.slnx 2>&1)",
+      "Bash(cd \"D:/GitHub/ExisPdfDemoApps/ExisPdfDemoApps\" && dotnet build src/Exis.PdfEditor.Demo.Wpf/Exis.PdfEditor.Demo.Wpf.csproj 2>&1)"
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+<UserControl x:Class="Exis.PdfEditor.Demo.Wpf.Views.InspectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Exis.PdfEditor.Demo.Wpf.ViewModels"
+             Background="{StaticResource SurfaceBrush}"
+             Padding="20,16">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- File Picker -->
+        <GroupBox Grid.Row="0" Header="Input PDF">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0"
+                         Style="{StaticResource StyledTextBox}"
+                         Text="{Binding InputFilePath, UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="True"
+                         Margin="0,0,10,0" />
+                <Button Grid.Column="1"
+                        Style="{StaticResource SecondaryButton}"
+                        Content="Browse..."
+                        Command="{Binding BrowseCommand}"
+                        Margin="0,0,6,0" />
+                <Button Grid.Column="2"
+                        Style="{StaticResource PrimaryButton}"
+                        Content="Inspect"
+                        Command="{Binding InspectCommand}" />
+            </Grid>
+        </GroupBox>
+
+        <!-- Metadata Properties Grid -->
+        <GroupBox Grid.Row="1" Header="Document Properties">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldLabel}"
+                           Text="Title" VerticalAlignment="Center" Margin="0,0,0,6" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueLabel}"
+                           Text="{Binding Title}" Margin="0,0,0,6" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource FieldLabel}"
+                           Text="Author" VerticalAlignment="Center" Margin="0,0,0,6" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueLabel}"
+                           Text="{Binding Author}" Margin="0,0,0,6" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource FieldLabel}"
+                           Text="Page Count" VerticalAlignment="Center" Margin="0,0,0,6" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueLabel}"
+                           Text="{Binding PageCount}" Margin="0,0,0,6" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource FieldLabel}"
+                           Text="File Size" VerticalAlignment="Center" Margin="0,0,0,6" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueLabel}"
+                           Text="{Binding FileSize}" Margin="0,0,0,6" />
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource FieldLabel}"
+                           Text="Created" VerticalAlignment="Center" Margin="0,0,0,6" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueLabel}"
+                           Text="{Binding CreationDate}" Margin="0,0,0,6" />
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource FieldLabel}"
+                           Text="Encrypted" VerticalAlignment="Center" Margin="0,0,0,6" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Style="{StaticResource ValueLabel}"
+                           Text="{Binding IsEncrypted}" Margin="0,0,0,6" />
+            </Grid>
+        </GroupBox>
+
+        <!-- Extract Text Button -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,8">
+            <Button Style="{StaticResource PrimaryButton}"
+                    Content="Extract Text"
+                    Command="{Binding ExtractTextCommand}" />
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Visibility="{Binding IsProcessing, Converter={StaticResource BoolToVisibility}}"
+                         Width="120"
+                         Margin="12,0,0,0" />
+        </StackPanel>
+
+        <!-- Extracted Text Content -->
+        <GroupBox Grid.Row="3" Header="Extracted Text">
+            <TextBox Style="{StaticResource StyledTextBox}"
+                     Text="{Binding TextContent, Mode=OneWay}"
+                     IsReadOnly="True"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
+                     VerticalAlignment="Stretch" />
+        </GroupBox>
+
+        <!-- Result -->
+        <TextBlock Grid.Row="4"
+                   Style="{StaticResource ResultText}"
+                   Text="{Binding ResultMessage}" />
+    </Grid>
+</UserControl>

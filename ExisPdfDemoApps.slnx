@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/Exis.PdfEditor.Demo.Console/Exis.PdfEditor.Demo.Console.csproj" />
+  <Project Path="src/Exis.PdfEditor.Demo.Wpf/Exis.PdfEditor.Demo.Wpf.csproj" />
+  <Project Path="src/Exis.PdfEditor.Demo.WinForms/Exis.PdfEditor.Demo.WinForms.csproj" />
+</Solution>

@@ -1,0 +1,98 @@
+<UserControl x:Class="Exis.PdfEditor.Demo.Wpf.Views.MergeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Exis.PdfEditor.Demo.Wpf.ViewModels"
+             Background="{StaticResource SurfaceBrush}"
+             Padding="20,16">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="300" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="280" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Panel: File List -->
+        <GroupBox Grid.Column="0" Header="PDF Files">
+            <DockPanel>
+                <!-- Toolbar buttons -->
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button Style="{StaticResource SecondaryButton}"
+                            Content="Add Files..."
+                            Command="{Binding AddFilesCommand}"
+                            Margin="0,0,6,0" />
+                    <Button Style="{StaticResource IconButton}"
+                            Content="Remove"
+                            Command="{Binding RemoveFileCommand}"
+                            Margin="0,0,6,0" />
+                    <Button Style="{StaticResource IconButton}"
+                            Content="Move Up"
+                            Command="{Binding MoveUpCommand}"
+                            Margin="0,0,6,0" />
+                    <Button Style="{StaticResource IconButton}"
+                            Content="Move Down"
+                            Command="{Binding MoveDownCommand}" />
+                </StackPanel>
+
+                <!-- File ListBox -->
+                <ListBox ItemsSource="{Binding FileList}"
+                         SelectedItem="{Binding SelectedFile}"
+                         MinHeight="200">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis"
+                                       ToolTip="{Binding}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
+
+        <!-- Right Panel: Actions -->
+        <StackPanel Grid.Column="2">
+            <!-- Merge Section -->
+            <GroupBox Header="Merge">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FieldLabel}"
+                               Text="Combine all listed files into a single PDF."
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,10" />
+                    <Button Style="{StaticResource PrimaryButton}"
+                            Content="Merge PDFs"
+                            Command="{Binding MergeCommand}"
+                            HorizontalAlignment="Stretch" />
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Split Section -->
+            <GroupBox Header="Split">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FieldLabel}"
+                               Text="Split the first listed file into chunks."
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,10" />
+
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="Pages per chunk" />
+                    <TextBox Style="{StaticResource StyledTextBox}"
+                             Text="{Binding SplitPageCount, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <Button Style="{StaticResource PrimaryButton}"
+                            Content="Split PDF"
+                            Command="{Binding SplitCommand}"
+                            HorizontalAlignment="Stretch" />
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Processing Indicator -->
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Visibility="{Binding IsProcessing, Converter={StaticResource BoolToVisibility}}"
+                         Margin="0,8,0,0" />
+
+            <!-- Result -->
+            <TextBlock Style="{StaticResource ResultText}"
+                       Text="{Binding ResultMessage}"
+                       Margin="0,8,0,0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

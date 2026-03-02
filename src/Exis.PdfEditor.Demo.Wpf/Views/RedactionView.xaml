@@ -1,0 +1,119 @@
+<UserControl x:Class="Exis.PdfEditor.Demo.Wpf.Views.RedactionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Exis.PdfEditor.Demo.Wpf.ViewModels"
+             Background="{StaticResource SurfaceBrush}"
+             Padding="20,16">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel MaxWidth="720">
+
+            <!-- Input File -->
+            <GroupBox Header="Input PDF">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"
+                             Style="{StaticResource StyledTextBox}"
+                             Text="{Binding InputFilePath, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="True"
+                             Margin="0,0,10,0" />
+                    <Button Grid.Column="1"
+                            Style="{StaticResource SecondaryButton}"
+                            Content="Browse..."
+                            Command="{Binding BrowseCommand}" />
+                </Grid>
+            </GroupBox>
+
+            <!-- Redaction Mode -->
+            <GroupBox Header="Redaction Mode">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <RadioButton Content="Text-based redaction"
+                                     IsChecked="{Binding IsTextRedaction, Mode=OneWay}"
+                                     GroupName="RedactionMode" />
+                        <RadioButton Content="Area-based redaction"
+                                     IsChecked="{Binding IsAreaRedaction}"
+                                     GroupName="RedactionMode" />
+                    </StackPanel>
+
+                    <!-- Text Redaction Options -->
+                    <StackPanel Visibility="{Binding IsTextRedaction, Converter={StaticResource BoolToVisibility}}">
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="Text to redact" />
+                        <TextBox Style="{StaticResource StyledTextBox}"
+                                 Text="{Binding RedactionText, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,10" />
+                        <CheckBox Content="Use regular expressions"
+                                  IsChecked="{Binding UseRegex}" />
+                    </StackPanel>
+
+                    <!-- Area Redaction Options -->
+                    <StackPanel Visibility="{Binding IsAreaRedaction, Converter={StaticResource BoolToVisibility}}">
+                        <TextBlock Style="{StaticResource FieldLabel}"
+                                   Text="Specify the area to redact (in points, origin at bottom-left)"
+                                   Margin="0,0,0,8" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                       Style="{StaticResource FieldLabel}" Text="X" />
+                            <TextBox Grid.Row="1" Grid.Column="0"
+                                     Style="{StaticResource StyledTextBox}"
+                                     Text="{Binding AreaX, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Grid.Row="0" Grid.Column="2"
+                                       Style="{StaticResource FieldLabel}" Text="Y" />
+                            <TextBox Grid.Row="1" Grid.Column="2"
+                                     Style="{StaticResource StyledTextBox}"
+                                     Text="{Binding AreaY, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Grid.Row="0" Grid.Column="4"
+                                       Style="{StaticResource FieldLabel}" Text="Width" />
+                            <TextBox Grid.Row="1" Grid.Column="4"
+                                     Style="{StaticResource StyledTextBox}"
+                                     Text="{Binding AreaWidth, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Grid.Row="0" Grid.Column="6"
+                                       Style="{StaticResource FieldLabel}" Text="Height" />
+                            <TextBox Grid.Row="1" Grid.Column="6"
+                                     Style="{StaticResource StyledTextBox}"
+                                     Text="{Binding AreaHeight, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Redact Action -->
+            <Button Style="{StaticResource PrimaryButton}"
+                    Content="Apply Redaction"
+                    Command="{Binding RedactCommand}"
+                    HorizontalAlignment="Left"
+                    Margin="0,4,0,0" />
+
+            <!-- Processing Indicator -->
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Visibility="{Binding IsProcessing, Converter={StaticResource BoolToVisibility}}"
+                         Margin="0,12,0,0" />
+
+            <!-- Result -->
+            <TextBlock Style="{StaticResource ResultText}"
+                       Text="{Binding ResultMessage}"
+                       Margin="0,12,0,0" />
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
