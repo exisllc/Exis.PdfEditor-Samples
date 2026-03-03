@@ -26,6 +26,7 @@ partial class MainForm
     private TabPage batchProcessorTab;
     private TabPage formFillerTab;
     private TabPage dashboardTab;
+    private TabPage imageEditorTab;
 
     // Quick Actions tab controls
     private Panel quickActionsTopPanel;
@@ -170,6 +171,10 @@ partial class MainForm
         dashboardTab = new TabPage("Dashboard");
         dashboardTab.BackColor = Color.White;
 
+        // ---- Image Editor Tab ----
+        imageEditorTab = new TabPage("Image Editor");
+        imageEditorTab.BackColor = Color.White;
+
         // ---- Add tabs ----
         mainTabControl.TabPages.AddRange(new TabPage[]
         {
@@ -177,7 +182,8 @@ partial class MainForm
             findReplaceTab,
             batchProcessorTab,
             formFillerTab,
-            dashboardTab
+            dashboardTab,
+            imageEditorTab
         });
 
         // ---- Form setup ----

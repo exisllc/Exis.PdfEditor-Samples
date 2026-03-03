@@ -9,6 +9,7 @@ public partial class MainForm : Form
     private BatchProcessorForm? _embeddedBatchProcessor;
     private FormFillerForm? _embeddedFormFiller;
     private DocumentDashboardForm? _embeddedDashboard;
+    private ImageEditorForm? _embeddedImageEditor;
 
     public MainForm()
     {
@@ -74,6 +75,15 @@ public partial class MainForm : Form
         };
         dashboardTab.Controls.Add(_embeddedDashboard);
         _embeddedDashboard.Show();
+
+        _embeddedImageEditor = new ImageEditorForm
+        {
+            TopLevel = false,
+            FormBorderStyle = FormBorderStyle.None,
+            Dock = DockStyle.Fill
+        };
+        imageEditorTab.Controls.Add(_embeddedImageEditor);
+        _embeddedImageEditor.Show();
     }
 
     private void OnOpenPdf(object? sender, EventArgs e)

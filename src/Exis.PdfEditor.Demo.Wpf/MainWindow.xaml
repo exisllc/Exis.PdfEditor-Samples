@@ -68,6 +68,9 @@
                 <TabItem Header="Redaction">
                     <views:RedactionView />
                 </TabItem>
+                <TabItem Header="Image Editor">
+                    <views:ImageEditorView />
+                </TabItem>
             </TabControl>
         </Border>
     </DockPanel>

@@ -66,6 +66,9 @@ internal class Program
                 case "11":
                     await FullPipelineDemo.RunAsync();
                     break;
+                case "12":
+                    await ImageEditorDemo.RunAsync();
+                    break;
                 default:
                     System.Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.WriteLine("\n  Invalid selection. Please try again.");
@@ -118,6 +121,7 @@ internal class Program
         PrintMenuItem(" 9", "PDF/A Compliance", "Validate and convert to PDF/A");
         PrintMenuItem("10", "Digital Signatures", "Sign and verify PDF documents");
         PrintMenuItem("11", "Full Pipeline Demo", "End-to-end enterprise workflow");
+        PrintMenuItem("12", "Image Editor", "Find and replace images");
 
         System.Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.WriteLine("  ├──────────────────────────────────────────────────────────┤");

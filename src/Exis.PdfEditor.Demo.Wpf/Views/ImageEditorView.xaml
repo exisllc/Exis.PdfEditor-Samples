@@ -1,0 +1,108 @@
+<UserControl x:Class="Exis.PdfEditor.Demo.Wpf.Views.ImageEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Exis.PdfEditor.Demo.Wpf.ViewModels"
+             Background="{StaticResource SurfaceBrush}"
+             Padding="20,16">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel MaxWidth="720">
+
+            <!-- Input File -->
+            <GroupBox Header="Input PDF">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"
+                             Style="{StaticResource StyledTextBox}"
+                             Text="{Binding InputFilePath, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="True"
+                             Margin="0,0,10,0" />
+                    <Button Grid.Column="1"
+                            Style="{StaticResource SecondaryButton}"
+                            Content="Browse..."
+                            Command="{Binding BrowseCommand}" />
+                </Grid>
+            </GroupBox>
+
+            <!-- Find Images -->
+            <Button Style="{StaticResource PrimaryButton}"
+                    Content="Find Images"
+                    Command="{Binding FindImagesCommand}"
+                    HorizontalAlignment="Left"
+                    Margin="0,4,0,0" />
+
+            <!-- Image List -->
+            <GroupBox Header="Images Found" Margin="0,8,0,0">
+                <TextBox Style="{StaticResource StyledTextBox}"
+                         Text="{Binding ImageListText, Mode=OneWay}"
+                         IsReadOnly="True"
+                         MinHeight="80"
+                         MaxHeight="200"
+                         VerticalScrollBarVisibility="Auto"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True" />
+            </GroupBox>
+
+            <!-- Replacement Image -->
+            <GroupBox Header="Replacement Image (JPEG or PNG)">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"
+                             Style="{StaticResource StyledTextBox}"
+                             Text="{Binding ReplacementImagePath, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="True"
+                             Margin="0,0,10,0" />
+                    <Button Grid.Column="1"
+                            Style="{StaticResource SecondaryButton}"
+                            Content="Browse..."
+                            Command="{Binding BrowseImageCommand}" />
+                </Grid>
+            </GroupBox>
+
+            <!-- Replace Options -->
+            <GroupBox Header="Replace Options">
+                <StackPanel>
+                    <CheckBox Content="Replace only specific indices"
+                              IsChecked="{Binding ReplaceByIndex}"
+                              Margin="0,0,0,8" />
+                    <StackPanel Orientation="Horizontal"
+                                Visibility="{Binding ReplaceByIndex, Converter={StaticResource BoolToVisibility}}">
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="Indices (comma-separated):" Margin="0,0,8,0"
+                                   VerticalAlignment="Center" />
+                        <TextBox Style="{StaticResource StyledTextBox}"
+                                 Text="{Binding ImageIndices, UpdateSourceTrigger=PropertyChanged}"
+                                 Width="200" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Actions -->
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                <Button Style="{StaticResource PrimaryButton}"
+                        Content="Replace All"
+                        Command="{Binding ReplaceAllCommand}"
+                        Margin="0,0,8,0" />
+                <Button Style="{StaticResource SecondaryButton}"
+                        Content="Replace Selected"
+                        Command="{Binding ReplaceSelectedCommand}" />
+            </StackPanel>
+
+            <!-- Processing Indicator -->
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Visibility="{Binding IsProcessing, Converter={StaticResource BoolToVisibility}}"
+                         Margin="0,12,0,0" />
+
+            <!-- Result -->
+            <TextBlock Style="{StaticResource ResultText}"
+                       Text="{Binding ResultMessage}"
+                       Margin="0,12,0,0" />
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
