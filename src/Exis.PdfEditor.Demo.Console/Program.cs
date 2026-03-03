@@ -90,7 +90,7 @@ internal class Program
         System.Console.WriteLine("  ╔══════════════════════════════════════════════════════════╗");
         System.Console.WriteLine("  ║                                                          ║");
         System.Console.WriteLine("  ║          E X I S . P D F E D I T O R                     ║");
-        System.Console.WriteLine("  ║          Demo Suite v1.5.2                                ║");
+        System.Console.WriteLine("  ║          Demo Suite v1.5.7                                ║");
         System.Console.WriteLine("  ║                                                          ║");
         System.Console.WriteLine("  ║    Professional PDF Processing for .NET                   ║");
         System.Console.WriteLine("  ║                                                          ║");

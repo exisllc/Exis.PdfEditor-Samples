@@ -5,6 +5,7 @@ namespace Exis.PdfEditor.Demo.WinForms;
 
 public partial class MainForm : Form
 {
+    private FindReplaceForm? _embeddedFindReplace;
     private BatchProcessorForm? _embeddedBatchProcessor;
     private FormFillerForm? _embeddedFormFiller;
     private DocumentDashboardForm? _embeddedDashboard;
@@ -21,11 +22,13 @@ public partial class MainForm : Form
     {
         openMenuItem.Click += OnOpenPdf;
         exitMenuItem.Click += (_, _) => Close();
+        findReplaceMenuItem.Click += (_, _) => mainTabControl.SelectedTab = findReplaceTab;
         batchProcessMenuItem.Click += (_, _) => mainTabControl.SelectedTab = batchProcessorTab;
         formFillMenuItem.Click += (_, _) => mainTabControl.SelectedTab = formFillerTab;
         dashboardMenuItem.Click += (_, _) => mainTabControl.SelectedTab = dashboardTab;
         aboutMenuItem.Click += OnAbout;
 
+        btnOpenFindReplace.Click += (_, _) => mainTabControl.SelectedTab = findReplaceTab;
         btnOpenBatchProcessor.Click += (_, _) => mainTabControl.SelectedTab = batchProcessorTab;
         btnOpenFormFiller.Click += (_, _) => mainTabControl.SelectedTab = formFillerTab;
         btnOpenDashboard.Click += (_, _) => mainTabControl.SelectedTab = dashboardTab;
@@ -36,6 +39,15 @@ public partial class MainForm : Form
 
     private void EmbedSubForms()
     {
+        _embeddedFindReplace = new FindReplaceForm
+        {
+            TopLevel = false,
+            FormBorderStyle = FormBorderStyle.None,
+            Dock = DockStyle.Fill
+        };
+        findReplaceTab.Controls.Add(_embeddedFindReplace);
+        _embeddedFindReplace.Show();
+
         _embeddedBatchProcessor = new BatchProcessorForm
         {
             TopLevel = false,
@@ -174,6 +186,7 @@ public partial class MainForm : Form
             "This application demonstrates the capabilities of the Exis.PdfEditor NuGet library " +
             "for .NET PDF manipulation.\n\n" +
             "Features demonstrated:\n" +
+            "  - Find & Replace with color/highlight styling\n" +
             "  - Batch processing (merge, optimize, convert)\n" +
             "  - PDF form filling and flattening\n" +
             "  - Document metadata inspection\n" +

@@ -45,8 +45,19 @@
                                   IsChecked="{Binding UseRegex}"
                                   Margin="0,0,24,0" />
                         <CheckBox Content="Shrink text to fit"
-                                  IsChecked="{Binding UseShrinkToFit}" />
+                                  IsChecked="{Binding UseAdaptiveFitting}" />
                     </StackPanel>
+
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="Replacement text color" Margin="0,12,0,0" />
+                    <ComboBox ItemsSource="{Binding ColorOptions}"
+                              SelectedItem="{Binding SelectedTextColor}"
+                              Width="180" HorizontalAlignment="Left"
+                              Margin="0,0,0,12" />
+
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="Highlight color" />
+                    <ComboBox ItemsSource="{Binding ColorOptions}"
+                              SelectedItem="{Binding SelectedHighlightColor}"
+                              Width="180" HorizontalAlignment="Left" />
                 </StackPanel>
             </GroupBox>
 

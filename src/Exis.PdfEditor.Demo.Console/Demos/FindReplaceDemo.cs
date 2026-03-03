@@ -91,6 +91,33 @@ internal static class FindReplaceDemo
             sw.Stop();
             ConsoleHelper.WriteSuccess($"TextFitting replaced {textFittingResult.TotalReplacements} occurrences in {sw.ElapsedMilliseconds}ms");
 
+            // 7. Replacement text styling (color + highlight)
+            ConsoleHelper.WriteInfo("\n--- Styled Replacement (Color + Highlight) ---");
+            sw.Restart();
+            var styledOutputPath = Path.Combine(outputDir, "find-replace-styled.pdf");
+            var styledResult = await PdfFindReplace.ExecuteAsync(samplePath, styledOutputPath,
+                "{{CUSTOMER_NAME}}", "Acme Corporation",
+                new PdfFindReplaceOptions
+                {
+                    ReplacementTextColor = PdfColor.Red,
+                    ReplacementHighlightColor = PdfColor.Yellow
+                });
+            sw.Stop();
+            ConsoleHelper.WriteSuccess($"Styled replace: {styledResult.TotalReplacements} occurrences with red text + yellow highlight in {sw.ElapsedMilliseconds}ms");
+
+            // 8. Color-only replacement (no highlight)
+            ConsoleHelper.WriteInfo("\n--- Color-Only Replacement ---");
+            sw.Restart();
+            var colorOnlyOutputPath = Path.Combine(outputDir, "find-replace-color-only.pdf");
+            var colorOnlyResult = await PdfFindReplace.ExecuteAsync(samplePath, colorOnlyOutputPath,
+                "{{DATE}}", DateTime.Now.ToString("yyyy-MM-dd"),
+                new PdfFindReplaceOptions
+                {
+                    ReplacementTextColor = PdfColor.Blue
+                });
+            sw.Stop();
+            ConsoleHelper.WriteSuccess($"Color-only replace: {colorOnlyResult.TotalReplacements} occurrences in blue text in {sw.ElapsedMilliseconds}ms");
+
             ConsoleHelper.WriteSuccess("\nAll find & replace demos completed successfully!");
         }
         catch (Exception ex)

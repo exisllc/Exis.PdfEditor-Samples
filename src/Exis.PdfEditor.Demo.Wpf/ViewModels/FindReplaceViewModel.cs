@@ -15,6 +15,8 @@ public class FindReplaceViewModel : INotifyPropertyChanged
     private string _replaceText = string.Empty;
     private bool _useRegex;
     private bool _useAdaptiveFitting = true;
+    private string _selectedTextColor = "None";
+    private string _selectedHighlightColor = "None";
     private string _resultMessage = string.Empty;
     private bool _isProcessing;
 
@@ -53,6 +55,20 @@ public class FindReplaceViewModel : INotifyPropertyChanged
     {
         get => _useAdaptiveFitting;
         set { _useAdaptiveFitting = value; OnPropertyChanged(); }
+    }
+
+    public string[] ColorOptions { get; } = { "None", "Red", "Blue", "Green", "Orange", "Magenta", "Cyan", "Black" };
+
+    public string SelectedTextColor
+    {
+        get => _selectedTextColor;
+        set { _selectedTextColor = value; OnPropertyChanged(); }
+    }
+
+    public string SelectedHighlightColor
+    {
+        get => _selectedHighlightColor;
+        set { _selectedHighlightColor = value; OnPropertyChanged(); }
     }
 
     public string ResultMessage
@@ -101,13 +117,17 @@ public class FindReplaceViewModel : INotifyPropertyChanged
             var replaceText = ReplaceText;
             var useRegex = UseRegex;
             var useAdaptive = UseAdaptiveFitting;
+            var textColor = ResolvePdfColor(SelectedTextColor);
+            var highlightColor = ResolvePdfColor(SelectedHighlightColor);
 
             await Task.Run(async () =>
             {
                 var options = new PdfFindReplaceOptions
                 {
                     UseRegex = useRegex,
-                    TextFitting = useAdaptive ? TextFittingMode.Adaptive : TextFittingMode.None
+                    TextFitting = useAdaptive ? TextFittingMode.Adaptive : TextFittingMode.None,
+                    ReplacementTextColor = textColor,
+                    ReplacementHighlightColor = highlightColor
                 };
 
                 await PdfFindReplace.ExecuteAsync(InputFilePath, outputPath, searchText, replaceText, options);
@@ -149,6 +169,8 @@ public class FindReplaceViewModel : INotifyPropertyChanged
             var replaceText = ReplaceText;
             var useRegex = UseRegex;
             var useAdaptive = UseAdaptiveFitting;
+            var textColor = ResolvePdfColor(SelectedTextColor);
+            var highlightColor = ResolvePdfColor(SelectedHighlightColor);
             var outputPath = dialog.FileName;
 
             await Task.Run(async () =>
@@ -156,7 +178,9 @@ public class FindReplaceViewModel : INotifyPropertyChanged
                 var options = new PdfFindReplaceOptions
                 {
                     UseRegex = useRegex,
-                    TextFitting = useAdaptive ? TextFittingMode.Adaptive : TextFittingMode.None
+                    TextFitting = useAdaptive ? TextFittingMode.Adaptive : TextFittingMode.None,
+                    ReplacementTextColor = textColor,
+                    ReplacementHighlightColor = highlightColor
                 };
 
                 await PdfFindReplace.ExecuteAsync(InputFilePath, outputPath, searchText, replaceText, options);
@@ -173,6 +197,19 @@ public class FindReplaceViewModel : INotifyPropertyChanged
             IsProcessing = false;
         }
     }
+
+    private static PdfColor? ResolvePdfColor(string colorName) => colorName switch
+    {
+        "Red" => PdfColor.Red,
+        "Blue" => PdfColor.Blue,
+        "Green" => PdfColor.Green,
+        "Orange" => PdfColor.Orange,
+        "Magenta" => PdfColor.Magenta,
+        "Cyan" => PdfColor.Cyan,
+        "Black" => PdfColor.Black,
+        "Yellow" => PdfColor.Yellow,
+        _ => null
+    };
 
     private static string GenerateOutputPath(string inputPath, string suffix)
     {

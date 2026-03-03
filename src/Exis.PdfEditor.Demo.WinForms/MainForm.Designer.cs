@@ -9,6 +9,7 @@ partial class MainForm
     private ToolStripMenuItem openMenuItem;
     private ToolStripMenuItem exitMenuItem;
     private ToolStripMenuItem toolsMenu;
+    private ToolStripMenuItem findReplaceMenuItem;
     private ToolStripMenuItem batchProcessMenuItem;
     private ToolStripMenuItem formFillMenuItem;
     private ToolStripMenuItem dashboardMenuItem;
@@ -21,6 +22,7 @@ partial class MainForm
 
     private TabControl mainTabControl;
     private TabPage quickActionsTab;
+    private TabPage findReplaceTab;
     private TabPage batchProcessorTab;
     private TabPage formFillerTab;
     private TabPage dashboardTab;
@@ -30,6 +32,7 @@ partial class MainForm
     private Label quickActionsTitle;
     private Label quickActionsSubtitle;
     private FlowLayoutPanel quickActionsButtonPanel;
+    private Button btnOpenFindReplace;
     private Button btnOpenBatchProcessor;
     private Button btnOpenFormFiller;
     private Button btnOpenDashboard;
@@ -57,10 +60,11 @@ partial class MainForm
         fileMenu.DropDownItems.AddRange(new ToolStripItem[] { openMenuItem, new ToolStripSeparator(), exitMenuItem });
 
         toolsMenu = new ToolStripMenuItem("&Tools");
+        findReplaceMenuItem = new ToolStripMenuItem("Find && &Replace...");
         batchProcessMenuItem = new ToolStripMenuItem("&Batch Processor...");
         formFillMenuItem = new ToolStripMenuItem("&Form Filler...");
         dashboardMenuItem = new ToolStripMenuItem("&Document Dashboard...");
-        toolsMenu.DropDownItems.AddRange(new ToolStripItem[] { batchProcessMenuItem, formFillMenuItem, dashboardMenuItem });
+        toolsMenu.DropDownItems.AddRange(new ToolStripItem[] { findReplaceMenuItem, batchProcessMenuItem, formFillMenuItem, dashboardMenuItem });
 
         helpMenu = new ToolStripMenuItem("&Help");
         aboutMenuItem = new ToolStripMenuItem("&About Exis.PdfEditor Demo");
@@ -129,11 +133,13 @@ partial class MainForm
         quickActionsButtonPanel.Padding = new Padding(0, 4, 0, 4);
         quickActionsButtonPanel.WrapContents = false;
 
+        btnOpenFindReplace = CreateAccentButton("Find & Replace");
         btnOpenBatchProcessor = CreateAccentButton("Batch Processor");
         btnOpenFormFiller = CreateAccentButton("Form Filler");
         btnOpenDashboard = CreateAccentButton("Document Dashboard");
         btnMergePdfs = CreateAccentButton("Merge PDFs...");
 
+        quickActionsButtonPanel.Controls.Add(btnOpenFindReplace);
         quickActionsButtonPanel.Controls.Add(btnOpenBatchProcessor);
         quickActionsButtonPanel.Controls.Add(btnOpenFormFiller);
         quickActionsButtonPanel.Controls.Add(btnOpenDashboard);
@@ -147,6 +153,10 @@ partial class MainForm
         quickActionsTab.Controls.Add(dragDropPanel);
         quickActionsTab.Controls.Add(quickActionsButtonPanel);
         quickActionsTab.Controls.Add(quickActionsTopPanel);
+
+        // ---- Find & Replace Tab ----
+        findReplaceTab = new TabPage("Find & Replace");
+        findReplaceTab.BackColor = Color.White;
 
         // ---- Batch Processor Tab ----
         batchProcessorTab = new TabPage("Batch Processor");
@@ -164,6 +174,7 @@ partial class MainForm
         mainTabControl.TabPages.AddRange(new TabPage[]
         {
             quickActionsTab,
+            findReplaceTab,
             batchProcessorTab,
             formFillerTab,
             dashboardTab
