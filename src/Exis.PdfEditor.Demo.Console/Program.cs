@@ -69,6 +69,9 @@ internal class Program
                 case "12":
                     await ImageEditorDemo.RunAsync();
                     break;
+                case "13":
+                    await WatermarkDemo.RunAsync();
+                    break;
                 default:
                     System.Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.WriteLine("\n  Invalid selection. Please try again.");
@@ -122,6 +125,7 @@ internal class Program
         PrintMenuItem("10", "Digital Signatures", "Sign and verify PDF documents");
         PrintMenuItem("11", "Full Pipeline Demo", "End-to-end enterprise workflow");
         PrintMenuItem("12", "Image Editor", "Find and replace images");
+        PrintMenuItem("13", "Watermark", "Add text watermarks to PDFs");
 
         System.Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.WriteLine("  ├──────────────────────────────────────────────────────────┤");

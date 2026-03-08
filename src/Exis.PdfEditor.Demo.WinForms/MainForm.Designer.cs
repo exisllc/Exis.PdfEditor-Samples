@@ -27,6 +27,7 @@ partial class MainForm
     private TabPage formFillerTab;
     private TabPage dashboardTab;
     private TabPage imageEditorTab;
+    private TabPage watermarkTab;
 
     // Quick Actions tab controls
     private Panel quickActionsTopPanel;
@@ -175,6 +176,10 @@ partial class MainForm
         imageEditorTab = new TabPage("Image Editor");
         imageEditorTab.BackColor = Color.White;
 
+        // ---- Watermark Tab ----
+        watermarkTab = new TabPage("Watermark");
+        watermarkTab.BackColor = Color.White;
+
         // ---- Add tabs ----
         mainTabControl.TabPages.AddRange(new TabPage[]
         {
@@ -183,7 +188,8 @@ partial class MainForm
             batchProcessorTab,
             formFillerTab,
             dashboardTab,
-            imageEditorTab
+            imageEditorTab,
+            watermarkTab
         });
 
         // ---- Form setup ----

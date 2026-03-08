@@ -12,6 +12,13 @@ public partial class FindReplaceForm : Form
         WireUpEvents();
     }
 
+    public void LoadFile(string filePath)
+    {
+        _inputFilePath = filePath;
+        txtInputFile.Text = filePath;
+        txtResult.Clear();
+    }
+
     private void WireUpEvents()
     {
         btnBrowseInput.Click += OnBrowseInput;
@@ -29,9 +36,7 @@ public partial class FindReplaceForm : Form
 
         if (ofd.ShowDialog() == DialogResult.OK)
         {
-            _inputFilePath = ofd.FileName;
-            txtInputFile.Text = _inputFilePath;
-            txtResult.Clear();
+            LoadFile(ofd.FileName);
         }
     }
 

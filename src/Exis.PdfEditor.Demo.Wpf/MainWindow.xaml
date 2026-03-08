@@ -71,6 +71,9 @@
                 <TabItem Header="Image Editor">
                     <views:ImageEditorView />
                 </TabItem>
+                <TabItem Header="Watermark">
+                    <views:WatermarkView />
+                </TabItem>
             </TabControl>
         </Border>
     </DockPanel>

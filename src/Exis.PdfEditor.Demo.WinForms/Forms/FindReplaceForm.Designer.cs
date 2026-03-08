@@ -4,20 +4,21 @@ partial class FindReplaceForm
 {
     private System.ComponentModel.IContainer components = null;
 
-    // Input
-    private Label lblInputFile;
+    // Top panel
+    private Panel topPanel;
+    private Label lblTitle;
+    private Label lblDescription;
+    private Panel filePickerPanel;
+    private Label lblFile;
     private TextBox txtInputFile;
     private Button btnBrowseInput;
 
-    // Search/Replace
-    private GroupBox grpSearchReplace;
+    // Settings panel
+    private Panel settingsPanel;
     private Label lblSearch;
     private TextBox txtSearch;
     private Label lblReplace;
     private TextBox txtReplace;
-
-    // Options
-    private GroupBox grpOptions;
     private CheckBox chkRegex;
     private CheckBox chkAdaptiveFitting;
     private Label lblTextColor;
@@ -25,15 +26,14 @@ partial class FindReplaceForm
     private Label lblHighlightColor;
     private ComboBox cmbHighlightColor;
 
-    // Actions
+    // Bottom panel
+    private Panel bottomPanel;
     private FlowLayoutPanel actionPanel;
     private Button btnExecute;
     private Button btnSaveAs;
-
-    // Result
+    private ProgressBar progressBar;
     private Label lblResult;
     private TextBox txtResult;
-    private ProgressBar progressBar;
 
     protected override void Dispose(bool disposing)
     {
@@ -48,112 +48,130 @@ partial class FindReplaceForm
     {
         components = new System.ComponentModel.Container();
         var baseFont = new Font("Segoe UI", 9.5f);
-        var headerFont = new Font("Segoe UI", 11f, FontStyle.Bold);
+        var headerFont = new Font("Segoe UI", 14f, FontStyle.Bold);
+        var labelFont = new Font("Segoe UI", 9f);
         var accentColor = Color.FromArgb(37, 99, 235);
 
-        var mainPanel = new Panel();
-        mainPanel.Dock = DockStyle.Fill;
-        mainPanel.Padding = new Padding(24);
-        mainPanel.BackColor = Color.White;
-        mainPanel.AutoScroll = true;
+        // ---- Top panel ----
+        topPanel = new Panel();
+        topPanel.Dock = DockStyle.Top;
+        topPanel.Height = 120;
+        topPanel.Padding = new Padding(24, 16, 24, 8);
+        topPanel.BackColor = Color.White;
 
-        var contentPanel = new Panel();
-        contentPanel.Dock = DockStyle.Top;
-        contentPanel.Height = 560;
-        contentPanel.MaximumSize = new Size(720, 0);
+        lblTitle = new Label();
+        lblTitle.Text = "Find & Replace";
+        lblTitle.Font = headerFont;
+        lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
+        lblTitle.AutoSize = true;
+        lblTitle.Location = new Point(24, 16);
 
-        int y = 0;
+        lblDescription = new Label();
+        lblDescription.Text = "Search for text in a PDF and replace it, with optional regex, color, and highlight styling.";
+        lblDescription.Font = baseFont;
+        lblDescription.ForeColor = Color.FromArgb(100, 116, 139);
+        lblDescription.AutoSize = true;
+        lblDescription.Location = new Point(26, 48);
 
-        // ---- Input File ----
-        lblInputFile = new Label();
-        lblInputFile.Text = "Input PDF File";
-        lblInputFile.Font = headerFont;
-        lblInputFile.ForeColor = Color.FromArgb(15, 23, 42);
-        lblInputFile.Location = new Point(0, y);
-        lblInputFile.AutoSize = true;
-        y += 30;
+        // PDF file picker
+        filePickerPanel = new Panel();
+        filePickerPanel.Location = new Point(24, 80);
+        filePickerPanel.Size = new Size(900, 40);
+        filePickerPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+
+        lblFile = new Label();
+        lblFile.Text = "PDF File:";
+        lblFile.Font = baseFont;
+        lblFile.ForeColor = Color.FromArgb(51, 65, 85);
+        lblFile.Location = new Point(0, 8);
+        lblFile.AutoSize = true;
 
         txtInputFile = new TextBox();
         txtInputFile.Font = baseFont;
-        txtInputFile.Location = new Point(0, y);
-        txtInputFile.Size = new Size(580, 28);
+        txtInputFile.Location = new Point(70, 4);
+        txtInputFile.Size = new Size(640, 28);
+        txtInputFile.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         txtInputFile.ReadOnly = true;
         txtInputFile.BackColor = Color.FromArgb(248, 250, 252);
-        txtInputFile.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        txtInputFile.BorderStyle = BorderStyle.FixedSingle;
 
         btnBrowseInput = new Button();
         btnBrowseInput.Text = "Browse...";
-        btnBrowseInput.Size = new Size(90, 28);
-        btnBrowseInput.Location = new Point(588, y);
+        btnBrowseInput.Size = new Size(90, 32);
+        btnBrowseInput.Location = new Point(716, 2);
         btnBrowseInput.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         btnBrowseInput.FlatStyle = FlatStyle.Flat;
         btnBrowseInput.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
+        btnBrowseInput.BackColor = Color.White;
+        btnBrowseInput.ForeColor = Color.FromArgb(51, 65, 85);
+        btnBrowseInput.Font = new Font("Segoe UI", 9f);
         btnBrowseInput.Cursor = Cursors.Hand;
-        btnBrowseInput.Font = baseFont;
-        y += 44;
 
-        // ---- Search & Replace ----
-        grpSearchReplace = new GroupBox();
-        grpSearchReplace.Text = "Search & Replace";
-        grpSearchReplace.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
-        grpSearchReplace.ForeColor = Color.FromArgb(51, 65, 85);
-        grpSearchReplace.Location = new Point(0, y);
-        grpSearchReplace.Size = new Size(680, 140);
-        grpSearchReplace.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        filePickerPanel.Controls.AddRange(new Control[] { lblFile, txtInputFile, btnBrowseInput });
+        topPanel.Controls.Add(filePickerPanel);
+        topPanel.Controls.Add(lblDescription);
+        topPanel.Controls.Add(lblTitle);
+
+        // ---- Settings panel (Fill) ----
+        settingsPanel = new Panel();
+        settingsPanel.Dock = DockStyle.Fill;
+        settingsPanel.Padding = new Padding(24, 16, 24, 8);
+        settingsPanel.BackColor = Color.White;
+
+        int y = 8;
 
         lblSearch = new Label();
         lblSearch.Text = "Search text:";
-        lblSearch.Font = baseFont;
-        lblSearch.Location = new Point(16, 28);
+        lblSearch.Font = labelFont;
+        lblSearch.ForeColor = Color.FromArgb(51, 65, 85);
+        lblSearch.Location = new Point(0, y);
         lblSearch.AutoSize = true;
 
         txtSearch = new TextBox();
         txtSearch.Font = baseFont;
-        txtSearch.Location = new Point(16, 50);
-        txtSearch.Size = new Size(640, 28);
+        txtSearch.Location = new Point(120, y - 2);
+        txtSearch.Size = new Size(500, 28);
+        txtSearch.BorderStyle = BorderStyle.FixedSingle;
         txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+
+        y += 40;
 
         lblReplace = new Label();
         lblReplace.Text = "Replace with:";
-        lblReplace.Font = baseFont;
-        lblReplace.Location = new Point(16, 84);
+        lblReplace.Font = labelFont;
+        lblReplace.ForeColor = Color.FromArgb(51, 65, 85);
+        lblReplace.Location = new Point(0, y);
         lblReplace.AutoSize = true;
 
         txtReplace = new TextBox();
         txtReplace.Font = baseFont;
-        txtReplace.Location = new Point(16, 106);
-        txtReplace.Size = new Size(640, 28);
+        txtReplace.Location = new Point(120, y - 2);
+        txtReplace.Size = new Size(500, 28);
+        txtReplace.BorderStyle = BorderStyle.FixedSingle;
         txtReplace.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-        grpSearchReplace.Controls.AddRange(new Control[] { lblSearch, txtSearch, lblReplace, txtReplace });
-        y += 152;
-
-        // ---- Options ----
-        grpOptions = new GroupBox();
-        grpOptions.Text = "Options";
-        grpOptions.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
-        grpOptions.ForeColor = Color.FromArgb(51, 65, 85);
-        grpOptions.Location = new Point(0, y);
-        grpOptions.Size = new Size(680, 160);
-        grpOptions.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        y += 48;
 
         chkRegex = new CheckBox();
         chkRegex.Text = "Use regular expressions";
         chkRegex.Font = baseFont;
-        chkRegex.Location = new Point(16, 28);
+        chkRegex.Location = new Point(0, y);
         chkRegex.AutoSize = true;
 
         chkAdaptiveFitting = new CheckBox();
         chkAdaptiveFitting.Text = "Shrink text to fit (adaptive)";
         chkAdaptiveFitting.Font = baseFont;
-        chkAdaptiveFitting.Location = new Point(220, 28);
+        chkAdaptiveFitting.Location = new Point(220, y);
         chkAdaptiveFitting.AutoSize = true;
         chkAdaptiveFitting.Checked = true;
 
+        y += 40;
+
         lblTextColor = new Label();
-        lblTextColor.Text = "Replacement text color:";
-        lblTextColor.Font = baseFont;
-        lblTextColor.Location = new Point(16, 64);
+        lblTextColor.Text = "Text color:";
+        lblTextColor.Font = labelFont;
+        lblTextColor.ForeColor = Color.FromArgb(51, 65, 85);
+        lblTextColor.Location = new Point(0, y);
         lblTextColor.AutoSize = true;
 
         cmbTextColor = new ComboBox();
@@ -161,13 +179,14 @@ partial class FindReplaceForm
         cmbTextColor.DropDownStyle = ComboBoxStyle.DropDownList;
         cmbTextColor.Items.AddRange(new object[] { "None", "Red", "Blue", "Green", "Orange", "Magenta", "Cyan", "Black" });
         cmbTextColor.SelectedIndex = 0;
-        cmbTextColor.Location = new Point(16, 88);
-        cmbTextColor.Size = new Size(180, 28);
+        cmbTextColor.Location = new Point(120, y - 2);
+        cmbTextColor.Size = new Size(150, 28);
 
         lblHighlightColor = new Label();
         lblHighlightColor.Text = "Highlight color:";
-        lblHighlightColor.Font = baseFont;
-        lblHighlightColor.Location = new Point(240, 64);
+        lblHighlightColor.Font = labelFont;
+        lblHighlightColor.ForeColor = Color.FromArgb(51, 65, 85);
+        lblHighlightColor.Location = new Point(300, y);
         lblHighlightColor.AutoSize = true;
 
         cmbHighlightColor = new ComboBox();
@@ -175,23 +194,31 @@ partial class FindReplaceForm
         cmbHighlightColor.DropDownStyle = ComboBoxStyle.DropDownList;
         cmbHighlightColor.Items.AddRange(new object[] { "None", "Yellow", "Cyan", "Green", "Magenta", "Orange", "Red", "Blue" });
         cmbHighlightColor.SelectedIndex = 0;
-        cmbHighlightColor.Location = new Point(240, 88);
-        cmbHighlightColor.Size = new Size(180, 28);
+        cmbHighlightColor.Location = new Point(420, y - 2);
+        cmbHighlightColor.Size = new Size(150, 28);
 
-        grpOptions.Controls.AddRange(new Control[]
+        settingsPanel.Controls.AddRange(new Control[]
         {
+            lblSearch, txtSearch,
+            lblReplace, txtReplace,
             chkRegex, chkAdaptiveFitting,
             lblTextColor, cmbTextColor,
             lblHighlightColor, cmbHighlightColor
         });
-        y += 172;
 
-        // ---- Action Buttons ----
+        // ---- Bottom panel ----
+        bottomPanel = new Panel();
+        bottomPanel.Dock = DockStyle.Bottom;
+        bottomPanel.Height = 150;
+        bottomPanel.Padding = new Padding(24, 8, 24, 12);
+        bottomPanel.BackColor = Color.FromArgb(248, 250, 252);
+
         actionPanel = new FlowLayoutPanel();
-        actionPanel.Location = new Point(0, y);
-        actionPanel.Size = new Size(680, 44);
+        actionPanel.Dock = DockStyle.Top;
+        actionPanel.Height = 44;
         actionPanel.FlowDirection = FlowDirection.LeftToRight;
         actionPanel.WrapContents = false;
+        actionPanel.Padding = new Padding(0, 4, 0, 4);
 
         btnExecute = new Button();
         btnExecute.Text = "Find && Replace";
@@ -215,45 +242,33 @@ partial class FindReplaceForm
         btnSaveAs.Cursor = Cursors.Hand;
 
         actionPanel.Controls.AddRange(new Control[] { btnExecute, btnSaveAs });
-        y += 50;
 
-        // ---- Progress ----
         progressBar = new ProgressBar();
-        progressBar.Location = new Point(0, y);
-        progressBar.Size = new Size(680, 20);
+        progressBar.Dock = DockStyle.Top;
+        progressBar.Height = 20;
         progressBar.Style = ProgressBarStyle.Marquee;
         progressBar.Visible = false;
-        progressBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        y += 28;
 
-        // ---- Result ----
         lblResult = new Label();
         lblResult.Text = "Result";
         lblResult.Font = new Font("Segoe UI", 10f, FontStyle.Bold);
         lblResult.ForeColor = Color.FromArgb(51, 65, 85);
-        lblResult.Location = new Point(0, y);
-        lblResult.AutoSize = true;
-        y += 24;
+        lblResult.Dock = DockStyle.Top;
+        lblResult.Height = 22;
 
         txtResult = new TextBox();
         txtResult.Font = new Font("Consolas", 9f);
-        txtResult.Location = new Point(0, y);
-        txtResult.Size = new Size(680, 60);
+        txtResult.Dock = DockStyle.Fill;
         txtResult.Multiline = true;
         txtResult.ReadOnly = true;
         txtResult.ScrollBars = ScrollBars.Vertical;
         txtResult.BackColor = Color.FromArgb(248, 250, 252);
         txtResult.BorderStyle = BorderStyle.FixedSingle;
-        txtResult.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-        contentPanel.Controls.AddRange(new Control[]
-        {
-            lblInputFile, txtInputFile, btnBrowseInput,
-            grpSearchReplace, grpOptions, actionPanel,
-            progressBar, lblResult, txtResult
-        });
-
-        mainPanel.Controls.Add(contentPanel);
+        bottomPanel.Controls.Add(txtResult);
+        bottomPanel.Controls.Add(lblResult);
+        bottomPanel.Controls.Add(progressBar);
+        bottomPanel.Controls.Add(actionPanel);
 
         // ---- Form setup ----
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -262,9 +277,10 @@ partial class FindReplaceForm
         Text = "Find & Replace";
         Font = baseFont;
         BackColor = Color.White;
-        Padding = new Padding(0);
 
-        Controls.Add(mainPanel);
+        Controls.Add(settingsPanel);
+        Controls.Add(bottomPanel);
+        Controls.Add(topPanel);
 
         ResumeLayout(false);
         PerformLayout();

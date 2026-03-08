@@ -1,0 +1,109 @@
+<UserControl x:Class="Exis.PdfEditor.Demo.Wpf.Views.WatermarkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Exis.PdfEditor.Demo.Wpf.ViewModels"
+             Background="{StaticResource SurfaceBrush}"
+             Padding="20,16">
+
+    <UserControl.DataContext>
+        <vm:WatermarkViewModel />
+    </UserControl.DataContext>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel MaxWidth="720">
+
+            <!-- Input File -->
+            <GroupBox Header="Input PDF">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"
+                             Style="{StaticResource StyledTextBox}"
+                             Text="{Binding InputFilePath, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="True"
+                             Margin="0,0,10,0" />
+                    <Button Grid.Column="1"
+                            Style="{StaticResource SecondaryButton}"
+                            Content="Browse..."
+                            Command="{Binding BrowseCommand}" />
+                </Grid>
+            </GroupBox>
+
+            <!-- Watermark Settings -->
+            <GroupBox Header="Watermark Settings">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="Watermark Text" />
+                    <TextBox Style="{StaticResource StyledTextBox}"
+                             Text="{Binding WatermarkText, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Style="{StaticResource FieldLabel}" Text="Position" />
+                        <ComboBox Grid.Row="1" Grid.Column="0"
+                                  ItemsSource="{Binding PositionOptions}"
+                                  SelectedIndex="{Binding SelectedPositionIndex}" />
+
+                        <TextBlock Grid.Row="0" Grid.Column="2"
+                                   Style="{StaticResource FieldLabel}" Text="Font Size" />
+                        <TextBox Grid.Row="1" Grid.Column="2"
+                                 Style="{StaticResource StyledTextBox}"
+                                 Text="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock Grid.Row="0" Grid.Column="4"
+                                   Style="{StaticResource FieldLabel}" Text="Color" />
+                        <ComboBox Grid.Row="1" Grid.Column="4"
+                                  ItemsSource="{Binding ColorOptions}"
+                                  SelectedItem="{Binding SelectedColor}" />
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource FieldLabel}"
+                               Text="{Binding OpacityPercent, StringFormat='Opacity: {0}'}"
+                               Margin="0,12,0,4" />
+                    <Slider Minimum="0" Maximum="1"
+                            Value="{Binding Opacity}"
+                            TickFrequency="0.05"
+                            IsSnapToTickEnabled="True"
+                            Margin="0,0,0,12" />
+
+                    <TextBlock Style="{StaticResource FieldLabel}"
+                               Text="Page Range (e.g. 1,2,3 — leave empty for all pages)" />
+                    <TextBox Style="{StaticResource StyledTextBox}"
+                             Text="{Binding PageRange, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Add Watermark Action -->
+            <Button Style="{StaticResource PrimaryButton}"
+                    Content="Add Watermark"
+                    Command="{Binding AddWatermarkCommand}"
+                    HorizontalAlignment="Left"
+                    Margin="0,4,0,0" />
+
+            <!-- Processing Indicator -->
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Visibility="{Binding IsProcessing, Converter={StaticResource BoolToVisibility}}"
+                         Margin="0,12,0,0" />
+
+            <!-- Result -->
+            <TextBlock Style="{StaticResource ResultText}"
+                       Text="{Binding ResultMessage}"
+                       Margin="0,12,0,0" />
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

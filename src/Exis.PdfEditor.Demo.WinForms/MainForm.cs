@@ -10,6 +10,8 @@ public partial class MainForm : Form
     private FormFillerForm? _embeddedFormFiller;
     private DocumentDashboardForm? _embeddedDashboard;
     private ImageEditorForm? _embeddedImageEditor;
+    private WatermarkForm? _embeddedWatermark;
+    private string? _lastDroppedFile;
 
     public MainForm()
     {
@@ -29,7 +31,15 @@ public partial class MainForm : Form
         dashboardMenuItem.Click += (_, _) => mainTabControl.SelectedTab = dashboardTab;
         aboutMenuItem.Click += OnAbout;
 
-        btnOpenFindReplace.Click += (_, _) => mainTabControl.SelectedTab = findReplaceTab;
+        btnOpenFindReplace.Click += (_, _) =>
+        {
+            if (_lastDroppedFile != null)
+            {
+                _embeddedFindReplace?.LoadFile(_lastDroppedFile);
+                _lastDroppedFile = null;
+            }
+            mainTabControl.SelectedTab = findReplaceTab;
+        };
         btnOpenBatchProcessor.Click += (_, _) => mainTabControl.SelectedTab = batchProcessorTab;
         btnOpenFormFiller.Click += (_, _) => mainTabControl.SelectedTab = formFillerTab;
         btnOpenDashboard.Click += (_, _) => mainTabControl.SelectedTab = dashboardTab;
@@ -84,6 +94,15 @@ public partial class MainForm : Form
         };
         imageEditorTab.Controls.Add(_embeddedImageEditor);
         _embeddedImageEditor.Show();
+
+        _embeddedWatermark = new WatermarkForm
+        {
+            TopLevel = false,
+            FormBorderStyle = FormBorderStyle.None,
+            Dock = DockStyle.Fill
+        };
+        watermarkTab.Controls.Add(_embeddedWatermark);
+        _embeddedWatermark.Show();
     }
 
     private void OnOpenPdf(object? sender, EventArgs e)
@@ -160,6 +179,8 @@ public partial class MainForm : Form
         if (files.Length == 0)
             return;
 
+        _lastDroppedFile = files[0];
+
         SetStatus($"Processing {files.Length} dropped file(s)...");
         ShowProgress(true);
 
@@ -173,8 +194,9 @@ public partial class MainForm : Form
                             $"Author: {info.Author ?? "N/A"}, Title: {info.Title ?? "N/A"}");
             }
 
-            var summary = $"Processed {files.Length} PDF file(s):\n\n" + string.Join("\n", results);
-            SetStatus($"Processed {files.Length} file(s) successfully.");
+            var summary = $"Processed {files.Length} PDF file(s):\n\n" + string.Join("\n", results) +
+                          "\n\nSelect a tool to work with this file.";
+            SetStatus($"Processed {files.Length} file(s) — select a tool to continue.");
             MessageBox.Show(summary, "Drop Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         catch (Exception ex)
