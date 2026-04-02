@@ -9,6 +9,6 @@
     <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Exis.PdfEditor" Version="3.1.4" />
+    <PackageReference Include="Exis.PdfEditor" Version="3.3.0" />
   </ItemGroup>
 </Project>
