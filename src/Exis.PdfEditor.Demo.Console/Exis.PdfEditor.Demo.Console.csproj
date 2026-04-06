@@ -7,6 +7,6 @@
     <RootNamespace>Exis.PdfEditor.Demo.Console</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Exis.PdfEditor" Version="3.3.0" />
+    <PackageReference Include="Exis.PdfEditor" Version="3.4.1" />
   </ItemGroup>
 </Project>
