@@ -74,6 +74,9 @@
                 <TabItem Header="Watermark">
                     <views:WatermarkView />
                 </TabItem>
+                <TabItem Header="Bates Numbering">
+                    <views:BatesNumberingView />
+                </TabItem>
             </TabControl>
         </Border>
     </DockPanel>

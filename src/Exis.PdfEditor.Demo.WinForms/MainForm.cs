@@ -11,6 +11,7 @@ public partial class MainForm : Form
     private DocumentDashboardForm? _embeddedDashboard;
     private ImageEditorForm? _embeddedImageEditor;
     private WatermarkForm? _embeddedWatermark;
+    private BatesNumberingForm? _embeddedBatesNumbering;
     private string? _lastDroppedFile;
 
     public MainForm()
@@ -103,6 +104,15 @@ public partial class MainForm : Form
         };
         watermarkTab.Controls.Add(_embeddedWatermark);
         _embeddedWatermark.Show();
+
+        _embeddedBatesNumbering = new BatesNumberingForm
+        {
+            TopLevel = false,
+            FormBorderStyle = FormBorderStyle.None,
+            Dock = DockStyle.Fill
+        };
+        batesNumberingTab.Controls.Add(_embeddedBatesNumbering);
+        _embeddedBatesNumbering.Show();
     }
 
     private void OnOpenPdf(object? sender, EventArgs e)

@@ -28,6 +28,7 @@ partial class MainForm
     private TabPage dashboardTab;
     private TabPage imageEditorTab;
     private TabPage watermarkTab;
+    private TabPage batesNumberingTab;
 
     // Quick Actions tab controls
     private Panel quickActionsTopPanel;
@@ -180,6 +181,10 @@ partial class MainForm
         watermarkTab = new TabPage("Watermark");
         watermarkTab.BackColor = Color.White;
 
+        // ---- Bates Numbering Tab ----
+        batesNumberingTab = new TabPage("Bates Numbering");
+        batesNumberingTab.BackColor = Color.White;
+
         // ---- Add tabs ----
         mainTabControl.TabPages.AddRange(new TabPage[]
         {
@@ -189,7 +194,8 @@ partial class MainForm
             formFillerTab,
             dashboardTab,
             imageEditorTab,
-            watermarkTab
+            watermarkTab,
+            batesNumberingTab
         });
 
         // ---- Form setup ----

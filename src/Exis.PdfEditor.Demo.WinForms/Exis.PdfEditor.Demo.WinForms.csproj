@@ -8,6 +8,6 @@
     <RootNamespace>Exis.PdfEditor.Demo.WinForms</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Exis.PdfEditor" Version="3.5.4" />
+    <PackageReference Include="Exis.PdfEditor" Version="3.6.3" />
   </ItemGroup>
 </Project>

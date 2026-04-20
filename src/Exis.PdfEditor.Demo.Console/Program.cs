@@ -72,6 +72,9 @@ internal class Program
                 case "13":
                     await WatermarkDemo.RunAsync();
                     break;
+                case "14":
+                    await BatesNumberingDemo.RunAsync();
+                    break;
                 default:
                     System.Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.WriteLine("\n  Invalid selection. Please try again.");
@@ -126,6 +129,7 @@ internal class Program
         PrintMenuItem("11", "Full Pipeline Demo", "End-to-end enterprise workflow");
         PrintMenuItem("12", "Image Editor", "Find and replace images");
         PrintMenuItem("13", "Watermark", "Add text watermarks to PDFs");
+        PrintMenuItem("14", "Bates Numbering", "Stamp sequential legal identifiers");
 
         System.Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.WriteLine("  ├──────────────────────────────────────────────────────────┤");
