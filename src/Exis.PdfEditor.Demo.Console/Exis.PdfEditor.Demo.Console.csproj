@@ -7,6 +7,11 @@
     <RootNamespace>Exis.PdfEditor.Demo.Console</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Exis.PdfEditor" Version="3.7.0" />
+    <PackageReference Include="Exis.PdfEditor" Version="3.8.1" />
+    <!-- OCR core + Tesseract engine are cross-platform (netstandard2.0/net8.0).
+         Exis.PdfOcr.Windows (the net8.0-windows rasterizer) is intentionally omitted
+         so this Console app stays cross-platform. -->
+    <PackageReference Include="Exis.PdfOcr" Version="1.0.5" />
+    <PackageReference Include="Exis.PdfOcr.Tesseract" Version="1.0.5" />
   </ItemGroup>
 </Project>

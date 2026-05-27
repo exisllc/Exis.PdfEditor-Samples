@@ -1,13 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <!-- net8.0-windows10.0.19041 is required by Exis.PdfOcr.Windows (uses Windows.Data.Pdf WinRT APIs) -->
+    <TargetFramework>net8.0-windows10.0.19041</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>Exis.PdfEditor.Demo.WinForms</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Exis.PdfEditor" Version="3.7.0" />
+    <PackageReference Include="Exis.PdfEditor" Version="3.8.1" />
+    <PackageReference Include="Exis.PdfOcr" Version="1.0.5" />
+    <PackageReference Include="Exis.PdfOcr.Tesseract" Version="1.0.5" />
+    <PackageReference Include="Exis.PdfOcr.Windows" Version="1.0.5" />
   </ItemGroup>
 </Project>
