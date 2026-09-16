@@ -9,7 +9,7 @@
     <RootNamespace>Exis.PdfEditor.Demo.WinForms</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Exis.PdfEditor" Version="4.2.2" />
+    <PackageReference Include="Exis.PdfEditor" Version="4.5.8" />
     <PackageReference Include="Exis.PdfOcr" Version="1.0.7" />
     <PackageReference Include="Exis.PdfOcr.Tesseract" Version="1.0.7" />
     <PackageReference Include="Exis.PdfOcr.Windows" Version="1.0.7" />
